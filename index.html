@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fb&line share test</title>
+</head>
+<body>
+  <button type="button" href="#!" id="lineShareBtn">Line share</button>
+  <a href="#!" id="fbShareBtn">Facebook share</a>
+
+
+  <!-- Facebook JavaScript SDK -->
+  <!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1" nonce="YOUR_NONCE_VALUE"></script> -->
+  <script>
+    // 初始化 Facebook JavaScript SDK
+window.fbAsyncInit = function() {
+  FB.init({
+    appId: '610156561172839',
+    status: true,
+    cookie: true,
+    xfbml: true,
+    version: 'v16.0'
+  });
+};
+
+// 加載 Facebook JavaScript SDK
+(function(d, s, id) {
+  var js,
+    fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0&appId=610156561172839&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+})(document, 'script', 'facebook-jssdk');
+
+// 監聽按鈕的點擊事件
+document.getElementById('fbShareBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  
+  // 檢查是否已初始化 Facebook SDK
+  if (typeof FB !== 'undefined') {
+    // 獲取要分享的連結
+    var shareUrl = window.location.href;
+    console.log('shareUrl',shareUrl);
+    
+    
+    // 調用 Facebook SDK 的分享功能
+    FB.ui({
+      method: 'share',
+      href: shareUrl
+    }, function(response) {
+      // 分享後的回調函式
+      console.log(response);
+    });
+  } else {
+    console.log('Facebook SDK not initialized');
+  }
+});
+
+
+
+
+
+
+    // 假設您有一個按鈕元素用於觸發分享操作
+    var lineShareBtn = document.getElementById('lineShareBtn');
+
+    // 監聽按鈕的點擊事件
+    lineShareBtn.addEventListener('click', function() {
+      // 獲取當前網頁的 URL
+      var currentUrl = window.location.href;
+      
+
+      // 使用 URL scheme 啟動 Line 應用程式並分享當前網頁的網址
+      var lineSchemeUrl = 'line://msg/text/' + encodeURIComponent(currentUrl);
+
+      // 檢查是否有安裝 Line 應用程式
+      window.location.href = lineSchemeUrl;
+    });
+
+    // // 假設您有一個按鈕元素用於觸發分享操作
+    // var fbShareBtn = document.getElementById('fbShareBtn');
+
+    // // 監聽按鈕的點擊事件
+    // fbShareBtn.addEventListener('click', function(e) {
+    //   e.preventDefault();
+    //   // 定義您要分享的連結和內容
+    //   var shareUrl = window.location.href; // 分享連結的 URL
+    //   // 目前測試: 以下項目無效
+    //   // var shareTitle = '分享的標題';
+    //   // var shareDescription = '分享的描述';
+    //   // var shareImage = 'https://picsum.photos/200/300'; // 分享圖片的 URL
+
+    //   // 使用 URL scheme 啟動 Facebook 應用程式
+    //   var facebookSchemeUrl = 'fb://share?link=' + encodeURIComponent(shareUrl);
+    //     // '&name=' + encodeURIComponent(shareTitle) +
+    //     // '&description=' + encodeURIComponent(shareDescription) +
+    //     // '&picture=' + encodeURIComponent(shareImage);
+
+    //   // 檢查是否有安裝 Facebook 應用程式
+    //   window.location.href = facebookSchemeUrl;
+    // });
+
+
+
+
+
+
+
+    // var fbShareBtn = document.getElementById('fbShareBtn');
+    // fbShareBtn.addEventListener('click', function(e) {
+    //   e.preventDefault();
+    //   var shareUrl = window.location.href;
+
+    //   var facebookSchemeUrl = 'fb://post?text=' + encodeURIComponent(shareUrl);
+    //   var fallbackUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
+
+    //   var openFacebookApp = function() {
+    //     window.location.href = facebookSchemeUrl;
+    //     setTimeout(function() {
+    //       window.location.href = fallbackUrl;
+    //     }, 1000);
+    //   };
+
+    //   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    //     // iOS
+    //     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.share) {
+    //       // iOS 14+ with WKWebView
+    //       window.webkit.messageHandlers.share.postMessage({
+    //         url: shareUrl,
+    //       });
+    //     } else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.shareURL) {
+    //       // iOS 9-13 with UIWebView
+    //       window.webkit.messageHandlers.shareURL.postMessage(shareUrl);
+    //     } else {
+    //       // Older iOS versions or iOS without WebView
+    //       window.location.href = fallbackUrl;
+    //     }
+    //   } else if (/Android/.test(navigator.userAgent)) {
+    //     // Android
+    //     if (navigator.share) {
+    //       // Using Web Share API if available
+    //       navigator.share({
+    //         url: shareUrl,
+    //       })
+    //         .catch(function(error) {
+    //           console.error('Web Share API error:', error);
+    //           openFacebookApp();
+    //         });
+    //     } else {
+    //       openFacebookApp();
+    //     }
+    //   } else {
+    //     // Other devices
+    //     window.location.href = fallbackUrl;
+    //   }
+    // });
+
+  </script>
+</body>
+</html>
